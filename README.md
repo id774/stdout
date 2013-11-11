@@ -28,18 +28,31 @@ demo2 = Stdout::Output.capture {
 p demo2 # => ["Hello, \n", "World!\n"]
 ```
 
-So, testing your print method with rspec.
+So, testing your print method with minitest.
 
 ``` html
 require 'stdout'
+require 'minitest/autorun'
 
-def your.some_method
-  puts "Something..."
+class YourClass
+  def self.some_method
+    puts "aaa"
+    puts "bbb"
+    puts "ccc"
+  end
 end
 
-expected = "Something...\n"
-
-Stdout::Output.capture{ your.some_method }.should eq expected
+class TestYourClass < MiniTest::Unit::TestCase
+  def test_some_method
+    expected = [
+      "aaa\n",
+      "bbb\n",
+      "ccc\n"
+    ]
+    result = Stdout::Output.capture{ YourClass.some_method }
+    assert_equal(expected, result)
+  end
+end
 ```
 
 See spec files.
