@@ -31,8 +31,15 @@ p demo2 # => ["Hello, \n", "World!\n"]
 So, testing your print method with rspec.
 
 ``` html
-Stdout::Output.capture{ your.some_method }.should eq expected
+require 'stdout'
 
+def your.some_method
+  puts "Something..."
+end
+
+expected = "Something...\n"
+
+Stdout::Output.capture{ your.some_method }.should eq expected
 ```
 
 See spec files.
