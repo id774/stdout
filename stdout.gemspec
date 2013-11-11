@@ -16,10 +16,32 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "README.md"
   ]
+  s.files = [
+    "Gemfile",
+    "README.md",
+    "Rakefile",
+    "VERSION",
+    "demo.rb",
+    "demo2.rb",
+    "doc/AUTHORS",
+    "doc/COPYING",
+    "doc/COPYING.LESSER",
+    "doc/ChangeLog",
+    "doc/LICENSE",
+    "lib/stdout.rb",
+    "lib/stdout/output.rb",
+    "script/.gitkeep",
+    "script/build",
+    "spec/lib/stdout/stdout_spec.rb",
+    "spec/lib/stdout_spec.rb",
+    "spec/spec_helper.rb",
+    "stdout.gemspec",
+    "vendor/.gitkeep"
+  ]
   s.homepage = "http://github.com/id774/stdout"
   s.licenses = ["GPL"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.1.10"
+  s.rubygems_version = "2.1.9"
   s.summary = "Stdout"
 
   if s.respond_to? :specification_version then
