@@ -77,6 +77,37 @@ describe Stdout::Output do
       end
     end
 
+    describe 'giving block of puts' do
+      it "should save stdout status" do
+
+        class OutputMock
+          def write(msg); end
+        end
+
+        output = OutputMock.new
+
+        Stdout::Output.capture {
+          puts "aaa"
+          puts "bbb"
+          puts "ccc"
+        }
+
+        $stdout.should equal STDOUT
+        $stdout.should_not equal output
+
+        $stdout = output
+
+        Stdout::Output.capture {
+          puts "aaa"
+          puts "bbb"
+          puts "ccc"
+        }
+
+        $stdout.should_not equal STDOUT
+        $stdout.should equal output
+      end
+    end
+
   end
 
   context 'capture method with separator "\r"' do
