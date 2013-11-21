@@ -21,9 +21,12 @@ module Stdout
       def capture(sep = $/)
         output = self.new
         saved_stdout = $stdout
-        $stdout = output
-        yield
-        $stdout = saved_stdout
+        begin
+          $stdout = output
+          yield
+        ensure
+          $stdout = saved_stdout
+        end
         output.print.join.each_line(sep = sep) {|line|
           output.dump.push(line)
         }

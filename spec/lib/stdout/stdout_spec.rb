@@ -164,4 +164,15 @@ describe Stdout::Output do
 
   end
 
+  context 'the wrapped block raises an error' do
+    it 'should release STDOUT out of capture block' do
+      original_stdout = $stdout
+      begin
+        result = Stdout::Output.capture { raise 'xxx' }
+      rescue
+      end
+      $stdout.should eq original_stdout
+    end
+  end
+
 end
