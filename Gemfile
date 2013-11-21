@@ -1,6 +1,6 @@
 # Version:20120317
 
-source :rubygems
+source 'https://rubygems.org'
 
 group :test do
   gem 'rspec'
