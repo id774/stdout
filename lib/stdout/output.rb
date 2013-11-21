@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # Name::      Stdout::Output
 # Author::    774 <http://id774.net>
 # Created::   Nov 11, 2013
