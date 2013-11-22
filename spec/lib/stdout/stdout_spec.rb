@@ -4,161 +4,172 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Stdout::Output do
 
-  context 'capture method with no arguments' do
+  describe '#capture' do
 
-    describe 'giving block of a put' do
-      it "should return array object" do
-        expected = ["hoge\n"]
+    context 'giving block of a put' do
+      subject { Stdout::Output.capture { puts "hoge" } }
 
-        result = Stdout::Output.capture { puts "hoge" }
-        result.should eq expected
+      let(:expected) { ["hoge\n"] }
+
+      it 'should return array object' do
+        expect(subject).to eql expected
       end
     end
 
-    describe 'giving block of puts' do
-      it "should return array object" do
+    context 'giving block of puts' do
+      subject {
+        Stdout::Output.capture {
+          puts "aaa"
+          puts "bbb"
+          puts "ccc"
+        }
+      }
 
-        expected = [
+      let(:expected) { [
           "aaa\n",
           "bbb\n",
           "ccc\n"
         ]
+      }
 
-        result = Stdout::Output.capture {
-          puts "aaa"
-          puts "bbb"
-          puts "ccc"
-        }
-
-        result.should eq expected
+      it "should return array object" do
+        expect(subject).to eql expected
       end
     end
 
-    describe 'giving block of print method' do
-      it "should return array object" do
-
-        def print_method
-          result = 1 + 2
-          puts "Answer is #{result}."
-        end
-
-        expected = [
-          "Answer is 3.\n"
-        ]
-
-        result = Stdout::Output.capture {
+    context 'giving block of print method' do
+      subject {
+        Stdout::Output.capture {
           print_method
         }
+      }
 
-        result.should eq expected
+      def print_method
+        result = 1 + 2
+        puts "Answer is #{result}."
+      end
+
+      let(:expected) {
+        [ "Answer is 3.\n" ]
+      }
+
+      it "should return array object" do
+        expect(subject).to eql expected
       end
     end
 
-    describe 'giving block of prints method' do
-      it "should return array object" do
+    context 'giving block of prints method' do
+      subject {
+        Stdout::Output.capture {
+          prints_method
+        }
+      }
 
-        def prints_method
-          puts "Job start"
-          puts "Now processing..."
-          puts "Done!"
-        end
+      def prints_method
+        puts "Job start"
+        puts "Now processing..."
+        puts "Done!"
+      end
 
-        expected = [
+      let(:expected) {
+        [
           "Job start\n",
           "Now processing...\n",
           "Done!\n"
         ]
+      }
 
-        result = Stdout::Output.capture {
-          prints_method
-        }
-
-        result.should eq expected
+      it "should return array object" do
+        expect(subject).to eql expected
       end
     end
 
-    describe 'giving block of puts' do
-      it "should save stdout status" do
-
-        class OutputMock
-          def write(msg); end
-        end
-
-        output = OutputMock.new
-
+    context 'giving block of puts' do
+      subject {
         Stdout::Output.capture {
           puts "aaa"
           puts "bbb"
           puts "ccc"
         }
+      }
 
-        $stdout.should equal STDOUT
-        $stdout.should_not equal output
+      class OutputMock
+        def write(msg); end
+      end
+
+      it "should save stdout status" do
+        subject
+
+        output = OutputMock.new
+        expect($stdout).to equal STDOUT
+        expect($stdout).not_to equal output
 
         $stdout = output
 
-        Stdout::Output.capture {
-          puts "aaa"
-          puts "bbb"
-          puts "ccc"
-        }
+        subject
 
-        $stdout.should_not equal STDOUT
-        $stdout.should equal output
+        expect($stdout).not_to equal STDOUT
+        expect($stdout).to equal output
       end
     end
 
   end
 
-  context 'capture method with separator "\r"' do
+  describe '#capture with separator "\r"' do
 
-    describe 'giving block of prints method' do
-      it "should return array object" do
+    context 'giving block of prints method' do
+      subject {
+        Stdout::Output.capture (sep = "\r") {
+          prints_method_with_r
+        }
+      }
 
-        def prints_method_with_r
-          print "Job start\r"
-          print "Now processing...\r"
-          print "Done!\r"
-        end
+      def prints_method_with_r
+        print "Job start\r"
+        print "Now processing...\r"
+        print "Done!\r"
+      end
 
-        expected = [
+      let(:expected) {
+        [
           "Job start\r",
           "Now processing...\r",
           "Done!\r"
         ]
+      }
 
-        result = Stdout::Output.capture (sep = "\r") {
-          prints_method_with_r
-        }
-
-        result.should eq expected
+      it "should return array object" do
+        expect(subject).to eql expected
       end
     end
 
   end
 
-  context 'capture method with separator "\n"' do
+  context '#capture with separator "\n"' do
 
-    describe 'giving block of prints method' do
-      it "should return array object" do
+    context 'giving block of prints method' do
+      subject {
+        result = Stdout::Output.capture (sep = "\n") {
+          prints_method_with_n
+        }
+      }
 
-        def prints_method_with_n
-          print "Job start\n"
-          print "Now processing...\n"
-          print "Done!\n"
-        end
+      def prints_method_with_n
+        print "Job start\n"
+        print "Now processing...\n"
+        print "Done!\n"
+      end
 
-        expected = [
+      let(:expected) {
+        [
           "Job start\n",
           "Now processing...\n",
           "Done!\n"
         ]
+      }
 
-        result = Stdout::Output.capture (sep = "\n") {
-          prints_method_with_n
-        }
-
-        result.should eq expected
+      it "should return array object" do
+        expect(subject).to eql expected
       end
     end
 
