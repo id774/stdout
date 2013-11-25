@@ -2,7 +2,7 @@
 # Name::      Stdout::Output
 # Author::    774 <http://id774.net>
 # Created::   Nov 11, 2013
-# Updated::   Nov 12, 2013
+# Updated::   Nov 25, 2013
 # Copyright:: 774 <http://id774.net> Copyright (c) 2013
 # License::   Licensed under the GNU GENERAL PUBLIC LICENSE, Version 3.0.
 
@@ -24,7 +24,7 @@ module Stdout
         $stdout = output
         yield
         $stdout = saved_stdout
-        output.print.join.each_line(sep = sep) {|line|
+        output.print.join.each_line(sep) {|line|
           output.dump.push(line)
         }
         return output.dump
