@@ -6,6 +6,6 @@ describe Stdout do
   context "VERSION" do
     subject { Stdout::VERSION }
 
-    it { expect(subject).to eql "0.0.2" }
+    it { expect(subject).to eq "0.0.2" }
   end
 end

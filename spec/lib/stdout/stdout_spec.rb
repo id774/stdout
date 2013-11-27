@@ -12,7 +12,7 @@ describe Stdout::Output do
       let(:expected) { ["hoge\n"] }
 
       it 'should return array object' do
-        expect(subject).to eql expected
+        expect(subject).to eq expected
       end
     end
 
@@ -33,7 +33,7 @@ describe Stdout::Output do
       }
 
       it "should return array object" do
-        expect(subject).to eql expected
+        expect(subject).to eq expected
       end
     end
 
@@ -54,7 +54,7 @@ describe Stdout::Output do
       }
 
       it "should return array object" do
-        expect(subject).to eql expected
+        expect(subject).to eq expected
       end
     end
 
@@ -80,7 +80,7 @@ describe Stdout::Output do
       }
 
       it "should return array object" do
-        expect(subject).to eql expected
+        expect(subject).to eq expected
       end
     end
 
@@ -139,7 +139,7 @@ describe Stdout::Output do
       }
 
       it "should return array object" do
-        expect(subject).to eql expected
+        expect(subject).to eq expected
       end
     end
 
@@ -169,7 +169,7 @@ describe Stdout::Output do
       }
 
       it "should return array object" do
-        expect(subject).to eql expected
+        expect(subject).to eq expected
       end
     end
 
